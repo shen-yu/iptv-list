@@ -1,0 +1,22 @@
+{
+  "name": "iptv-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shen-Yu/iptv-list.git"
+  },
+  "author": "Shen-Yu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Shen-Yu/iptv-list/issues"
+  },
+  "homepage": "https://github.com/Shen-Yu/iptv-list#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}
