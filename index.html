@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <title>IPTV list</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.all.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="loading" class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
+      <main v-else class="columns is-desktop-only">
+        <div class="column"></div>
+        <div class="column">
+          <h1 class="title is-spaced"><a href="/">IPTV list</a></h1>
+          <div class="select is-primary">
+            <select @change="selectCategory">
+              <option value="">Select Category</option>
+              <option v-for="(i,d) in categories" :key="i">{{i}}</option>
+            </select>
+          </div>
+          <div class="select is-primary">
+            <select @change="selectCountry">
+              <option value="">Select Country</option>
+              <option v-for="(i,d) in countries" :value="i.code" :key="i.code">
+                {{i.name}}
+              </option>
+            </select>
+          </div>
+          <div class="table-container">
+            <table class="table is-fullwidth">
+              <thead>
+                <th>Name</th>
+                <th class="cate">Category</th>
+                <th class="url">Url</th>
+                <th>Copy</th>
+              </thead>
+              <tbody>
+                <tr v-for="(i,d) in items" :key="i.url">
+                  <td>{{i.name}}</td>
+                  <td class="cate">{{i.category}}</td>
+                  <td class="url">{{i.url}}</td>
+                  <td style="text-align: right">
+                    <button
+                      :data-clipboard-text="i.url"
+                      @click="onCopy(i,d)"
+                      class="button is-primary"
+                      :class="`item_${d}`"
+                    >
+                      Copy
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="column"></div>
+      </main>
+      <footer class="footer">
+        <div class="content has-text-centered">
+          <a href="https://github.com/Shen-Yu/iptv-list" target="_blank"
+            >iptv-list</a
+          >
+          by
+          <a href="https://github.com/Shen-Yu" target="_blank">Eric Shen</a> is
+          licensed under
+          <a href="https://mit-license.org/" target="_blank">MIT</a>.
+        </div>
+      </footer>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        items_all: [],
+        items: [],
+        categories: [],
+        countries: [],
+        isCopied: false,
+        loading: true,
+      },
+      mounted() {
+        fetch("./channels.json").then(async (response) => {
+          const items = await response.json();
+          this.items_all = items;
+          this.items = items.filter((i) => i.category === "Movies");
+          this.categories = [...new Set(items.map((v) => v.category))];
+          let arr = [];
+          const res = new Map();
+          for (const item of items) {
+            arr = [...arr, ...item.countries];
+          }
+          this.countries = arr
+            .filter((a) => !res.has(a.code) && res.set(a.code, 1))
+            .sort((a, b) => a.name.localeCompare(b.name));
+          this.loading = false;
+        });
+      },
+      methods: {
+        selectCategory(e) {
+          const { value } = e.target;
+          if (value) {
+            this.items = this.items_all.filter((i) => i.category === value);
+          }
+        },
+        selectCountry(e) {
+          const { value } = e.target;
+          if (value) {
+            this.items = this.items_all.filter(
+              (i) => i.countries.filter((v) => v.code === value).length > 0
+            );
+          }
+        },
+        handleToast(msg, type) {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            animation: false,
+            didOpen: (toast) => {
+              toast.addEventListener("mouseenter", Swal.stopTimer);
+              toast.addEventListener("mouseleave", Swal.resumeTimer);
+            },
+          });
+          Toast.fire({
+            icon: type,
+            title: msg,
+          });
+        },
+        onCopy(i, d) {
+          let clipboard = new ClipboardJS(`.item_${d}`);
+          clipboard.on("success", () => {
+            this.handleToast(`${i.name} Copied Success !`, "success");
+          });
+          clipboard.on("error", () => {
+            this.handleToast(`${i.name} Copied Fail !`, "error");
+          });
+        },
+      },
+    });
+  </script>
+</html>
