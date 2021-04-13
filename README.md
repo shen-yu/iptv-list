@@ -14,4 +14,4 @@ IPTV-list makes it easy to copy and play iptv channels (5000+) .</h3>
 
 - [x] Easy to search Channels by Category or Country.
 - [x] Easy to copy Channels' link
-- [ ] channels' video player
+- [x] channels' video player
