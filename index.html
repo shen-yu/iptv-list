@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.6/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.13.1/dist/hls.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
@@ -53,14 +54,14 @@
                 <th>Name</th>
                 <th class="cate">Category</th>
                 <th class="url">Url</th>
-                <th>Copy</th>
+                <th class="btns">Copy</th>
               </thead>
               <tbody>
                 <tr v-for="(i,d) in items" :key="i.url">
                   <td>{{i.name}}</td>
                   <td class="cate">{{i.category}}</td>
                   <td class="url">{{i.url}}</td>
-                  <td style="text-align: right">
+                  <td class="btns">
                     <button
                       :data-clipboard-text="i.url"
                       @click="onCopy(i,d)"
@@ -68,6 +69,9 @@
                       :class="`item_${d}`"
                     >
                       Copy
+                    </button>
+                    <button @click="onPlay(i,d)" class="button is-primary">
+                      Play
                     </button>
                   </td>
                 </tr>
@@ -88,6 +92,25 @@
           <a href="https://mit-license.org/" target="_blank">MIT</a>.
         </div>
       </footer>
+      <div :class="['modal',video_show&&'is-active']">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <video
+            id="player"
+            class="player"
+            playsinline
+            controls
+            preload="none"
+            controlslist="nodownload"
+            width="100%"
+          ></video>
+        </div>
+        <button
+          @click="video_show=false"
+          class="modal-close is-large"
+          aria-label="close"
+        ></button>
+      </div>
     </div>
   </body>
   <script>
@@ -100,6 +123,9 @@
         countries: [],
         isCopied: false,
         loading: true,
+        modal_show: true,
+        videoUrl: "",
+        video_show: false,
       },
       mounted() {
         fetch("./channels.json").then(async (response) => {
@@ -158,6 +184,19 @@
           clipboard.on("error", () => {
             this.handleToast(`${i.name} Copied Fail !`, "error");
           });
+        },
+        onPlay(i, d) {
+          if (Hls.isSupported()) {
+            this.video_show = true;
+            const video = document.getElementById("player");
+            const hls = new Hls();
+            hls.loadSource(i.url);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+              console.log("Loaded Success ！");
+              setTimeout(() => video.play(), 500);
+            });
+          }
         },
       },
     });

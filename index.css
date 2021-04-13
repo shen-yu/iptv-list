@@ -60,6 +60,10 @@ tr td img {
   td.url {
     max-width: 500px;
   }
+  th.btns,
+  td.btns {
+    min-width: 180px;
+  }
 }
 td.url {
   overflow: hidden;
