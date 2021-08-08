@@ -15,11 +15,38 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@0.13.1/dist/hls.min.js"></script>
     <link
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/github-fork-ribbon-css@0.2.3/gh-fork-ribbon.css"
+    />
+    <link
+      rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
     />
     <link rel="stylesheet" href="./index.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-HG9ML96XFK"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-HG9ML96XFK");
+    </script>
+    <script type="text/javascript" src="//js.users.51.la/21094553.js"></script>
   </head>
   <body>
+    <a
+      class="github-fork-ribbon right-top"
+      href="https://github.com/Shen-Yu/iptv-list"
+      data-ribbon="Fork me on GitHub"
+      title="Fork me on GitHub"
+      target="_blank"
+      >Fork me on GitHub</a
+    >
     <div id="app">
       <div v-if="loading" class="spinner">
         <div class="rect1"></div>
@@ -201,5 +228,4 @@
       },
     });
   </script>
-  <script type="text/javascript" src="//js.users.51.la/21094553.js"></script>
 </html>

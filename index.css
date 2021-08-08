@@ -131,3 +131,7 @@ td.url {
     -webkit-transform: scaleY(1);
   }
 }
+
+.github-fork-ribbon.right-top:before {
+  background-color: #f80;
+}
