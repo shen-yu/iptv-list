@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: 00 02 * * *
+    - cron: 00 02 * * 1
 
 jobs:
   feed-processor:
