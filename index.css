@@ -54,11 +54,11 @@ tr td img {
 }
 @media screen and (min-width: 768px) {
   td.cate {
-    max-width: 500px;
+    max-width: 125px;
   }
   th.url,
   td.url {
-    max-width: 500px;
+    max-width: 480px;
   }
   th.btns,
   td.btns {
