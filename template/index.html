@@ -213,6 +213,10 @@
           });
         },
         onPlay(i, d) {
+          if(i.url.substr(0,7)==='http://'){
+            this.handleToast(`Sorry, but now it's only support https !`, "error");
+            return false
+          }
           if (Hls.isSupported()) {
             this.video_show = true;
             const video = document.getElementById("player");
