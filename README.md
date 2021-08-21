@@ -15,4 +15,4 @@ makes it easy to copy and play iptv channels (5000+) .</h3>
 
 - [x] Easy to search Channels by Category or Country.
 - [x] Easy to copy Channels' link
-- [x] Video player for Channels
+- [x] Video player for Channels (Only for https link)
