@@ -37,7 +37,6 @@ tr td img {
 
 .table-container {
   margin-top: 20px;
-  max-width: 900px;
 }
 @media screen and (max-width: 768px) {
   * {
@@ -51,6 +50,9 @@ tr td img {
   td.url {
     max-width: 100px;
   }
+  .btns button{
+    transform: scale(.8);
+  }
 }
 @media screen and (min-width: 768px) {
   td.cate {
@@ -63,6 +65,13 @@ tr td img {
   th.btns,
   td.btns {
     min-width: 180px;
+  }
+  .search-bar {
+    margin-left: 10%;
+  }
+  .table-container {
+    max-width: 80%;
+    margin-left: 10%;
   }
 }
 td.url {

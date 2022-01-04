@@ -55,25 +55,36 @@
         <div class="rect4"></div>
         <div class="rect5"></div>
       </div>
-      <main v-else class="columns is-desktop-only">
-        <div class="column"></div>
-        <div class="column">
+      <main v-else class="columns is-mobile">
+        <div class="column is-full">
           <h1 class="title is-spaced">
             <a href="https://shen-yu.github.io/iptv-list/">IPTV list</a>
           </h1>
-          <div class="select is-primary">
-            <select @change="selectCategory">
-              <option value="">Select Category</option>
-              <option v-for="(i,d) in categories" :key="i">{{i}}</option>
-            </select>
-          </div>
-          <div class="select is-primary">
-            <select @change="selectCountry">
-              <option value="">Select Country</option>
-              <option v-for="(i,d) in countries" :value="i.code" :key="i.code">
-                {{i.name}}
-              </option>
-            </select>
+          <div class="search-bar">
+            <div class="select is-primary">
+              <select @change="selectCategory">
+                <option value="">Select Category</option>
+                <option
+                  v-for="(i,d) in categories"
+                  :value="i.slug"
+                  :key="i.slug"
+                >
+                  {{i.name}}
+                </option>
+              </select>
+            </div>
+            <div class="select is-primary">
+              <select @change="selectCountry">
+                <option value="">Select Country</option>
+                <option
+                  v-for="(i,d) in countries"
+                  :value="i.code"
+                  :key="i.code"
+                >
+                  {{i.name}}
+                </option>
+              </select>
+            </div>
           </div>
           <div class="table-container">
             <table class="table is-fullwidth">
@@ -84,9 +95,16 @@
                 <th class="btns">Action</th>
               </thead>
               <tbody>
-                <tr v-for="(i,d) in items" :key="i.url">
+                <tr v-for="(i,d) in items" :key="i.name">
                   <td>{{i.name}}</td>
-                  <td class="cate">{{i.category}}</td>
+                  <td class="cate">
+                    <span
+                      v-for="item in i.categories"
+                      :key="item.slug"
+                      class="tag is-primary is-light"
+                      >{{item.name}}</span
+                    >
+                  </td>
                   <td class="url">{{i.url}}</td>
                   <td class="btns">
                     <button
@@ -106,7 +124,6 @@
             </table>
           </div>
         </div>
-        <div class="column"></div>
       </main>
       <footer class="footer">
         <div class="content has-text-centered">
@@ -158,15 +175,23 @@
         fetch("./channels.json").then(async (response) => {
           const items = await response.json();
           this.items_all = items;
-          this.items = items.filter((i) => i.category === "Movies");
-          this.categories = [...new Set(items.map((v) => v.category))];
-          let arr = [];
+          this.items = items;
+          let arr_categories = [],
+            arr_countries = [];
           const res = new Map();
           for (const item of items) {
-            arr = [...arr, ...item.countries];
+            arr_countries = [...arr_countries, ...item.countries];
           }
-          this.countries = arr
+          this.countries = arr_countries
             .filter((a) => !res.has(a.code) && res.set(a.code, 1))
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+          const res2 = new Map();
+          for (const item of items) {
+            arr_categories = [...arr_categories, ...item.categories];
+          }
+          this.categories = arr_categories
+            .filter((a) => !res2.has(a.slug) && res2.set(a.slug, 1))
             .sort((a, b) => a.name.localeCompare(b.name));
           this.loading = false;
         });
@@ -175,7 +200,9 @@
         selectCategory(e) {
           const { value } = e.target;
           if (value) {
-            this.items = this.items_all.filter((i) => i.category === value);
+            this.items = this.items_all.filter(
+              (i) => i.categories.filter((v) => v.slug === value).length > 0
+            );
           }
         },
         selectCountry(e) {
@@ -213,9 +240,12 @@
           });
         },
         onPlay(i, d) {
-          if(i.url.substr(0,7)==='http://'){
-            this.handleToast(`Sorry, but now it's only support https !`, "error");
-            return false
+          if (i.url.substr(0, 7) === "http://") {
+            this.handleToast(
+              `Sorry, but now it's only support https !`,
+              "error"
+            );
+            return false;
           }
           if (Hls.isSupported()) {
             this.video_show = true;
