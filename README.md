@@ -1,5 +1,5 @@
 <p align="center"><a href="https://shen-yu.github.io/iptv-list/?utm_source=gh_readme" target="_blank"><img width="100" src="logo.png" alt="logo"/></a></p>
-<h1 align="center">IPTV-list</h1>
+<h1 align="center">:point_right: <a href="https://shen-yu.github.io/iptv-list/?utm_source=gh">IPTV-list</a></h1>
 <h3 align="center">
 List of IPTV channels with the option to play them directly in the browser (10000+) .</h3>
 
