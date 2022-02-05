@@ -63,11 +63,11 @@
           <div class="search-bar">
             <div class="select is-primary">
               <select @change="selectCategory">
-                <option value="">Select Category</option>
                 <option
                   v-for="(i,d) in categories"
                   :value="i.slug"
                   :key="i.slug"
+                  :selected="i.slug==='movies'?'selected':''"
                 >
                   {{i.name}}
                 </option>
@@ -175,7 +175,10 @@
         fetch("./channels.json").then(async (response) => {
           const items = await response.json();
           this.items_all = items;
-          this.items = items;
+          this.items = this.items_all.filter(
+            (i) => i.categories.filter((v) => v.slug === "movies").length > 0
+          );
+          console.log(this.items);
           let arr_categories = [],
             arr_countries = [];
           const res = new Map();
