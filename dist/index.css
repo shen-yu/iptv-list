@@ -1,0 +1,146 @@
+ul,
+li {
+  list-style-type: none;
+}
+a {
+  color: #00c4a7;
+}
+a:hover {
+  color: #00d1b2;
+}
+
+tr td {
+  user-select: all;
+}
+
+tr td img {
+  width: 40px;
+  height: 40px;
+}
+
+.title {
+  text-align: center;
+  margin: 40px auto !important;
+}
+.is-spaced {
+  margin-bottom: 20px;
+}
+.swal-button {
+  background-color: #00d1b2;
+  border: 1px solid #00d1b2;
+}
+
+.swal-button:not([disabled]):hover {
+  background-color: #00c4a7;
+  border: 1px solid #00c4a7;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+@media screen and (max-width: 768px) {
+  * {
+    font-size: 98%;
+  }
+  th.cate,
+  td.cate {
+    display: none;
+  }
+  th.url,
+  td.url {
+    max-width: 100px;
+  }
+  .btns button{
+    transform: scale(.8);
+  }
+}
+@media screen and (min-width: 768px) {
+  td.cate {
+    max-width: 125px;
+  }
+  th.url,
+  td.url {
+    max-width: 480px;
+  }
+  th.btns,
+  td.btns {
+    min-width: 180px;
+  }
+  .search-bar {
+    margin-left: 10%;
+  }
+  .table-container {
+    max-width: 80%;
+    margin-left: 10%;
+  }
+}
+td.url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #00d1b2;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: stretchDelay 1.2s infinite ease-in-out;
+  animation: stretchDelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchDelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+@keyframes stretchDelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
+
+.github-fork-ribbon.right-top:before {
+  background-color: #f80;
+}
