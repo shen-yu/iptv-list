@@ -20,6 +20,8 @@ jobs:
           node-version: "14"
       - name: Install dependencies
         run: npm install
+      - name: Build JSON
+        run: node index.js
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
