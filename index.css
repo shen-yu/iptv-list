@@ -22,6 +22,9 @@ tr td img {
   text-align: center;
   margin: 40px auto !important;
 }
+.logo {
+  width: 18%;
+}
 .is-spaced {
   margin-bottom: 20px;
 }
@@ -50,8 +53,11 @@ tr td img {
   td.url {
     max-width: 100px;
   }
-  .btns button{
-    transform: scale(.8);
+  .btns button {
+    transform: scale(0.8);
+  }
+  .logo {
+    width: 60%;
   }
 }
 @media screen and (min-width: 768px) {
